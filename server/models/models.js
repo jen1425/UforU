@@ -23,5 +23,17 @@ module.exports = {
         }
       });
     }
+  },
+
+  signup: {
+    post: function(username, cb) {
+      connection.query('SELECT id FROM users WHERE (username =' + username, function(err, results, fields) {
+        if (err) {
+          cb(err, null);
+        } else {
+          cb(null, results);
+        }
+      });
+    }
   }
 };

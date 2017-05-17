@@ -9,4 +9,6 @@ router.post('/signup', function(){
 
 router.post('/api/colleges/suggestions', controllers.colleges.getSuggestions);
 
+router.post('/signup', controllers.signup.post);
+
 module.exports = router;

@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
 var router = require('./router/router.js');
+var sessions = require('./sessions.js');
 
 var app = express();
 var IP = process.env.IP || 'localhost';
@@ -15,10 +16,16 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(router);
 
+<<<<<<< HEAD
 app.get('*', function(request, response) {
   response.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+||||||| merged common ancestors
+=======
+app.use(sessions(process.env.REDISCLOUD_URL, process.env.COOKIE_SECRET));
+
+>>>>>>> Signup page
 app.listen(PORT, function () {
   console.log('listening right now on port', PORT);
 });
@@ -26,6 +33,6 @@ app.listen(PORT, function () {
 
 console.log('listening on', IP, PORT);
 
-//adding comment to test review apps 
+//adding comment to test review apps
 
 module.exports.app = app;

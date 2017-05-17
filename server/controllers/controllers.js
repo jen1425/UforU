@@ -43,5 +43,28 @@ module.exports = {
         }
       });
     }
+  },
+
+  signup: {
+    post: function(req, res) {
+      var username = req.body.username;
+      var password = req.body.password;
+      console.log('Request ', req.session);
+
+      models.signup.post(username, function(err, results) {
+
+        console.log('RESULT of signup query', results);
+
+        if (results) {
+
+        }
+
+        // if (result) redirect to login
+        // else create new user and password in db and redirect to /home
+      });
+
+
+
+    }
   }
 };
