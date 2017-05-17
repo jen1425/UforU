@@ -49,7 +49,7 @@ module.exports = {
     post: function(req, res) {
       var username = req.body.username;
       var password = req.body.password;
-      console.log('Request ', req.session);
+      console.log('Request Signup', req.session);
 
       models.signup.post(username, function(err, results) {
 

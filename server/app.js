@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -14,22 +15,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(sessions(process.env.REDISCLOUD_URL, process.env.COOKIE_SECRET));
+
 app.use(router);
 
-<<<<<<< HEAD
 app.get('*', function(request, response) {
+  console.log('session', request.sessionID, request.session.user);
   response.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-||||||| merged common ancestors
-=======
-app.use(sessions(process.env.REDISCLOUD_URL, process.env.COOKIE_SECRET));
-
->>>>>>> Signup page
 app.listen(PORT, function () {
   console.log('listening right now on port', PORT);
 });
-
 
 console.log('listening on', IP, PORT);
 
