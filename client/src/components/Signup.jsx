@@ -63,6 +63,11 @@ class Signup extends React.Component {
       });
   }
 
+  handleKeyPress(target) {
+    if (target.charCode === 13) { 
+      this.submitHandler();
+    }
+  }
   render() {
 
     if (this.state.isLoggedIn) {
@@ -79,7 +84,7 @@ class Signup extends React.Component {
           <div className = "col-md-2 col-md-offset-5">
             <div className = "form-group">
               <input className = "form-control" type = "text" name = "username" placeholder = "Enter Username" onChange={this.usernameHandler.bind(this)}></input>
-              <input className = "inputText" type = "text" name = "password" placeholder = "Enter Password" onChange={this.passwordHandler.bind(this)}></input>
+              <input className = "inputText" type = "password" name = "password" placeholder = "Enter Password" onChange={this.passwordHandler.bind(this)} onKeyPress={this.handleKeyPress.bind(this)}></input>
             </div>
           </div>
         </div>
