@@ -52,7 +52,9 @@ class Signup extends React.Component {
   render() {
 
     if (this.state.isLoggedIn) {
+
       return <Redirect to={{pathname: '/home', state: {isLoggedIn: this.state.isLoggedIn}}} />;
+
     }
     return (
        <div className="container-fluid-fullwidth">
