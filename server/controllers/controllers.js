@@ -66,9 +66,7 @@ module.exports = {
           console.log('Error in login', err);
           res.status(404).send();
         } else {
-          console.log('CONTROLLERS LOGIN success');
           req.session.user = username;
-          console.log('controller login req.sessionID', req.sessionID);
           res.status(200).send('User logged in Controller');
           console.log(results);
         }

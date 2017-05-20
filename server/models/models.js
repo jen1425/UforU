@@ -2,6 +2,7 @@ var connection = require('./dbConnection').connection;
 var mySearchFunction = require('./queryHelper.js').mySearchFunction;
 var asyncMap = require('./queryHelper.js').asyncMap;
 var querySchoolTable = require('./queryHelper.js').querySchoolTable;
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
   colleges: {
@@ -35,11 +36,19 @@ module.exports = {
             console.log('USER EXISTS', results);
             cb('User already exists', null);
           } else {
-            connection.query('Insert into Users (username, password) Values (?, ?)', [username, password], function(err, results, fields) {
+            // hash password and store
+            let salt = bcrypt.genSaltSync(10);
+            bcrypt.hash(password, salt, null, function(err, hash) {
               if (err) {
-                cb(err, null);
+                console.log('Error hashing password', err);
               } else {
-                cb(null, 'User successfully created');
+                connection.query('Insert into Users (username, password) Values (?, ?)', [username, hash], function(err, results, fields) {
+                  if (err) {
+                    cb(err, null);
+                  } else {
+                    cb(null, 'User successfully created');
+                  }
+                });
               }
             });
           }
@@ -50,15 +59,26 @@ module.exports = {
 
   login: {
     post: function(username, password, cb) {
-      connection.query('Select * from Users where username = ? and password = ?', [username, password], function(err, results, fields) {
+      // update the logic. Get hashed password (err if null) => bcrypt compare if they match 
+      connection.query('Select password from Users where username = ?', [username], function(err, results, fields) {
         if (err) {
           cb(err, null);
         } else {
           if (results.length === 0) {
             cb('Wrong login or password', null);
           } else {
-            console.log('RESULT from model', results);
-            cb(null, 'User successfully logged in Models');
+            let retrievedPassword = results[0].password;
+            bcrypt.compare(password, retrievedPassword, function(err, result) { 
+              if (err) {
+                cb('Wrong login or password', null);            
+              } else {
+                if (result === true) {
+                  cb(null, 'User successfully logged in Models');
+                } else {
+                  cb('Wrong login or password', null);
+                }
+              }
+            });
           }
         }
       });
