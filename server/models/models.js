@@ -2,6 +2,7 @@ var connection = require('./dbConnection').connection;
 var mySearchFunction = require('./queryHelper.js').mySearchFunction;
 var asyncMap = require('./queryHelper.js').asyncMap;
 var querySchoolTable = require('./queryHelper.js').querySchoolTable;
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
   colleges: {
@@ -35,11 +36,18 @@ module.exports = {
             console.log('USER EXISTS', results);
             cb('User already exists', null);
           } else {
-            connection.query('Insert into Users (username, password) Values (?, ?)', [username, password], function(err, results, fields) {
+            // hash password and store
+            bcrypt.hash(password, null, null, function(err, hash) {
               if (err) {
-                cb(err, null);
+                console.log('Error hashing password', err);
               } else {
-                cb(null, 'User successfully created');
+                connection.query('Insert into Users (username, password) Values (?, ?)', [username, hash], function(err, results, fields) {
+                  if (err) {
+                    cb(err, null);
+                  } else {
+                    cb(null, 'User successfully created');
+                  }
+                });
               }
             });
           }
