@@ -1,4 +1,6 @@
 import React from 'react';
+import About from './About.jsx';
+import Banner from './Banner.jsx';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 
@@ -53,6 +55,8 @@ class Signup extends React.Component {
       return <Redirect to={{pathname: '/home', state: {isLoggedIn: this.state.isLoggedIn}}} />;
     }
     return (
+       <div className="container-fluid-fullwidth">
+         <Banner />
       <div className = "signupContain">
         <p className = "loginText"> Create an account </p>
         <div className="row">
@@ -65,13 +69,18 @@ class Signup extends React.Component {
         </div>
         <div className="row">
           <div className = "loginButton center-block">
-            <button className = "loginButton" type = "submit" onClick = {this.submitHandler.bind(this)}>Signup</button>
+            <button className = "btn btn-primary btn-lg" type = "submit" onClick = {this.submitHandler.bind(this)}>Signup</button>
           </div>
         </div>
         <div className="row">
           {
             this.state.showError ? <h6 className="text-center"><small>Username is already taken.</small></h6> : <div></div>
           }
+        </div>
+      </div>
+      <About />
+        <div className = "container-fluid-fullwidth">
+          <div className="navbar-default navbar-fixed-bottom">Made by Farrah Bousetta, Arseniy Kotov, and Helen Tang</div>
         </div>
       </div>
     );

@@ -2,15 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import Banner from './Banner.jsx';
+import About from './About.jsx';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {username: '',
-                  password: '',
-                  isLoggedIn: this.props.location.state.isLoggedIn,
-                  showError: false
+      password: '',
+      isLoggedIn: this.props.location.state.isLoggedIn,
+      showError: false
     };
   }
 
@@ -43,7 +45,9 @@ class Login extends React.Component {
     }
 
     return (
-      <div className = "signupContain">
+       <div className="container-fluid-fullwidth">
+        <Banner />
+        <div className = "signupContain">
         <p className = "loginText"> Please Login below </p>
         <div className="row">
           <div className="col-md-2 col-md-offset-5">
@@ -53,7 +57,7 @@ class Login extends React.Component {
         </div>
         <div className="row">
           <div className="loginButton center-block">
-            <button className = "loginButton" type = "submit" onClick = {this.onLoginSubmit.bind(this)}>Login</button>
+            <button className = "btn btn-primary btn-lg" type = "submit" onClick = {this.onLoginSubmit.bind(this)}>Login</button>
           </div>
         </div>
         <div className="row">
@@ -65,6 +69,11 @@ class Login extends React.Component {
           {
             this.state.showError ? <h6 className="text-center"><small>Username or password is incorrect.</small></h6> : <div></div>
           }
+        </div>
+      </div>
+        <About />
+        <div className = "container-fluid-fullwidth">
+          <div className="navbar-default navbar-fixed-bottom">Made by Farrah Bousetta, Arseniy Kotov, and Helen Tang</div>
         </div>
       </div>
     );
