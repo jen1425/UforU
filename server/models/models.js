@@ -37,7 +37,8 @@ module.exports = {
             cb('User already exists', null);
           } else {
             // hash password and store
-            bcrypt.hash(password, null, null, function(err, hash) {
+            let salt = bcrypt.genSaltSync(10);
+            bcrypt.hash(password, salt, null, function(err, hash) {
               if (err) {
                 console.log('Error hashing password', err);
               } else {
@@ -58,15 +59,26 @@ module.exports = {
 
   login: {
     post: function(username, password, cb) {
-      connection.query('Select * from Users where username = ? and password = ?', [username, password], function(err, results, fields) {
+      // update the logic. Get hashed password (err if null) => bcrypt compare if they match 
+      connection.query('Select password from Users where username = ?', [username], function(err, results, fields) {
         if (err) {
           cb(err, null);
         } else {
           if (results.length === 0) {
             cb('Wrong login or password', null);
           } else {
-            console.log('RESULT from model', results);
-            cb(null, 'User successfully logged in Models');
+            let retrievedPassword = results[0].password;
+            bcrypt.compare(password, retrievedPassword, function(err, result) { 
+              if (err) {
+                cb('Wrong login or password', null);            
+              } else {
+                if (result === true) {
+                  cb(null, 'User successfully logged in Models');
+                } else {
+                  cb('Wrong login or password', null);
+                }
+              }
+            });
           }
         }
       });
