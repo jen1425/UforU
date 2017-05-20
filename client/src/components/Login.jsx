@@ -37,6 +37,12 @@ class Login extends React.Component {
     this.setState(updater);
   }
 
+  handleKeyPress(target) {
+    if (target.charCode === 13) { 
+      this.onLoginSubmit();
+    }
+  }
+
   render() {
     if (this.state.isLoggedIn) {
       return (
@@ -52,7 +58,7 @@ class Login extends React.Component {
         <div className="row">
           <div className="col-md-2 col-md-offset-5">
             <input className = "inputText" type = "text" name = "username" placeholder = "Enter Username" onChange={this.updateVal.bind(this, 'username')}></input>
-            <input className = "inputText" type = "text" name = "password" placeholder = "Enter Password" onChange={this.updateVal.bind(this, 'password')}></input>
+            <input className = "inputText" type = "password" name = "password" placeholder = "Enter Password" onChange={this.updateVal.bind(this, 'password')} onKeyPress={this.handleKeyPress.bind(this)}></input>
           </div>
         </div>
         <div className="row">
