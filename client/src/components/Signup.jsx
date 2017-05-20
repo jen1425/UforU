@@ -11,6 +11,7 @@ class Signup extends React.Component {
       username: '',
       password: '',
       showError: false,
+      showBlankError: false,
       isLoggedIn: this.props.location.state.isLoggedIn
     };
   }
@@ -28,11 +29,24 @@ class Signup extends React.Component {
   }
 
   submitHandler() {
+
+    this.setState({
+      showBlankError: false,
+      showError: false
+    });
+
     console.log('sending ', this.state.username, this.state.password);
     var userData = {
       username: this.state.username,
       password: this.state.password
     };
+
+    if(this.state.username == '' || this.state.password == '') {
+      this.setState({
+        showBlankError: true
+      });
+      return;
+    }
 
     axios({
       url: '/signup',
@@ -52,7 +66,9 @@ class Signup extends React.Component {
   render() {
 
     if (this.state.isLoggedIn) {
+
       return <Redirect to={{pathname: '/home', state: {isLoggedIn: this.state.isLoggedIn}}} />;
+
     }
     return (
        <div className="container-fluid-fullwidth">
@@ -75,6 +91,11 @@ class Signup extends React.Component {
         <div className="row">
           {
             this.state.showError ? <h6 className="text-center"><small>Username is already taken.</small></h6> : <div></div>
+          }
+        </div>
+        <div className="row">
+          {
+            this.state.showBlankError ? <h6 className="text-center"><small>Please ensure that you enter both fields.</small></h6> : <div></div>
           }
         </div>
       </div>
