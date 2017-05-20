@@ -19,7 +19,7 @@ class FavsListEntry extends React.Component {
           <div className="col-md-3">
             <img className="img-responsive cardImages style_prevu_kit" src = {college.image_url}/>
           </div>
-          <a className="college-name" href={'http://' + college.website_url}> {college.name}</a>
+          <a className="college-name" href={'http://' + college.website_url} target="_blank"> {college.name}</a>
           <button className="deleteFavs" onClick={this.deleteHandler.bind(this, college)}>Remove from Favorites</button>
           <p className="description">{college.description}</p>
         </div>

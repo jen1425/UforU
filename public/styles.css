@@ -397,3 +397,7 @@ p.loginText {
   position: absolute;
   width: 20px;
 }
+
+.logout {
+  margin-right: 20px;
+}

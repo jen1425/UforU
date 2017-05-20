@@ -1,62 +1,14 @@
 import React from 'react';
-import $ from 'jquery';
-import axios from 'axios';
-import Survey from './Survey.jsx';
-import Results from './Results.jsx';
-import Nav from './Nav.jsx';
 
-class Home extends React.Component {
+class About extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      colleges: [],
-      isLoggedIn: this.props.location.state.isLoggedIn
-    },
-
-    this.sendSurveyInfo = this.sendSurveyInfo.bind(this);
   }
 
-  sendSurveyInfo(userData) {
-    console.log('axios data:', userData);
-    userData.size = userData.size.split('-');
-    axios({
-      url: '/api/colleges',
-      method: 'POST',
-      data: userData,
-    })
-      .then ((results) => {
-        this.setState({
-          colleges: results.data
-        });
-        console.log('axios results: ', results);
-      })
-      .catch ((error) => {
-        console.log(error);
-      });
-  }
 
-  render() {
+  render () {
     return (
-      <div className="container-fluid-fullwidth">
-        <Nav isLoggedIn={this.state.isLoggedIn}/>
-        <div className="container" id="banner">
-          <h1>
-            <b>UFORU</b>
-          </h1>
-          <hr></hr>
-          <h4>
-            UNIVERSITY FOR YOU
-          </h4>
-          <hr></hr>
-        </div>
-        <div className="container-fluid">
-          <Survey sendSurveyInfo = {this.sendSurveyInfo}/>
-        </div>
-        <div className="container-fluid">
-          <Results colleges = {this.state.colleges}/>
-        </div>
-        <div className="card">
+      <div className="card">
           <div className="row" className="bio">
             <h6><b><u>ABOUT THE CREATORS</u></b></h6>
             <div className="col-md-4">
@@ -81,12 +33,7 @@ class Home extends React.Component {
             </div>
           </div>
          </div>
-        <div className = "container-fluid-fullwidth">
-          <div className="navbar-default navbar-fixed-bottom">Made by Farrah Bousetta, Arseniy Kotov, and Helen Tang</div>
-        </div>
-      </div>
     );
   }
 }
-
-export default Home;
+export default About;

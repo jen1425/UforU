@@ -20,7 +20,7 @@ class Nav extends React.Component {
               <ul className="nav navbar-nav">
                 <li><Link to={{pathname: '/favorites', state: {isLoggedIn: this.state.isLoggedIn}}}>Favorites</Link></li>
               </ul>
-              <ul className="nav navbar-nav navbar-right">
+              <ul className="nav navbar-nav navbar-right logout">
                   <li><Link to={{pathname: '/logout', state: {isLoggedIn: this.state.isLoggedIn}}}>Logout</Link></li>
               </ul>
               </div>
