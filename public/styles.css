@@ -284,6 +284,8 @@ h6 {
   margin-right: auto;
   margin-bottom: 10px;
   border-radius: 50%;
+  border-style: solid;
+  border-color: #C0B283;
 }
 
 /* bottom footer */
